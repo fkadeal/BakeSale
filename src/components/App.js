@@ -1,5 +1,6 @@
 import React from "react";
-import {View , Text ,StyleSheet} from "react-native"
+import {View , Text ,StyleSheet} from "react-native"    
+import DealList from "./DealList";
 import ajax from '../ajax';
 
 class App extends React.Component{
@@ -8,16 +9,14 @@ class App extends React.Component{
     }
     async componentDidMount(){ 
         const deals = await ajax.fetchInitialDeals();
-        this.setState((prevState) => {
-            return {deals}
-        })
+        this.setState({deals})
         console.log(this.state.deals)
     }
     render() {
         return( 
                 <View style={styles.container}>
-                    <Text style={styles.header} >Bake Sale</Text>
-                    {/* <Text style={styles.header} >{JSON.stringify(this.deals)}</Text> */}
+                    { this.state.deals.length > 0 ? <DealList deals={this.state.deals} ></DealList> : <Text style={styles.header} >Bake Sale</Text>}
+                    
                 </View >
         );
     }
